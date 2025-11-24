@@ -121,7 +121,7 @@
             <h4 class="mb-3">Student Information</h4>
 
             <div class="mb-3">
-                <label class="form-label">Student Name <span class="req">*</span></label>
+                <label class="form-label">Student Name<span class="req">*</span></label>
                 <input type="text" name="studentName" class="form-control" required />
             </div>
 
@@ -172,7 +172,7 @@
 
                 <div class="col-12 col-md-6">
                     <label class="form-label">Mobile Number <span class="req">*</span></label>
-                    <input type="tel" name="mobileNumber" class="form-control" required />
+                    <input type="tel" name="mobileNumber" class="form-control" pattern="^[0-9]{11}$" required/>
                 </div>
 
                 <div class="col-12 col-md-6">
@@ -224,7 +224,7 @@
 <div id="successOverlay">
     <div class="successBox">
         <h3>Thank you!</h3>
-        <p>Your enquiry has been submitted successfully.</p>
+        <p>Your enquiry has been submitted successfully.<br>We will contact you soon.</p>
         <button id="successReset" class="btn btn-warning mt-3 w-100">Reset Form</button>
     </div>
 </div>
@@ -333,17 +333,24 @@ successReset.addEventListener("click", () => {
 //     })
 //     .catch(() => alert("Submission failed"));
 // });
+// let url = "https://script.google.com/macros/s/AKfycbzkYR0EFYf-A2ygGqSqrcMT-dkTgavqJ49wo8fqePOckQ7qQE9GBZDw2E8qZ2X--U1smQ/exec"
+// let url = "https://script.google.com/macros/s/AKfycbwKHUW8Fw8WmtPKZgR6okEkKwUP98iNZMzXO6_EInIQ8MjK59WEJzy_BzeGNra6M3Xw/exec"
+let url = "https://script.google.com/macros/s/AKfycbzF6pTKJEE0R8uO-SNCslzVldz7tfOvI5iWOqVKMt8VWuppZ9LhI1HN0SOEuHxCQcKaVA/exec"
+
 // SUBMIT
 step2.addEventListener("submit", e => {
     e.preventDefault();
+    document.querySelector("button[type=submit]").disabled = true;
 
     // SHOW LOADING SCREEN
     document.getElementById("loadingOverlay").style.display = "flex";
 
     let formData = new FormData();
+    const token = btoa(Date.now() + "-" + Math.random());
+    formData.append("token", token);
     document.querySelectorAll("input, select").forEach(el => formData.append(el.name, el.value));
 
-    fetch("https://script.google.com/macros/s/AKfycbwKHUW8Fw8WmtPKZgR6okEkKwUP98iNZMzXO6_EInIQ8MjK59WEJzy_BzeGNra6M3Xw/exec", {
+    fetch(url, {
         method: "POST",
         body: formData
     })
@@ -355,13 +362,33 @@ step2.addEventListener("submit", e => {
         successOverlay.style.display = "flex";
         localStorage.clear();
     })
-    .catch(() => {
-        alert("Submission failed, please try again later.");
+    .catch((err) => {
+        alert(err);
 
         // HIDE LOADING EVEN IF FAILED
         document.getElementById("loadingOverlay").style.display = "none";
     });
 });
+
+// step2.addEventListener("submit", e => { 
+//     e.preventDefault(); // SHOW LOADING SCREEN 
+//     document.getElementById("loadingOverlay").style.display = "flex"; 
+//     let formData = new FormData(); 
+//     document.querySelectorAll("input, select").forEach(el => formData.append(el.name, el.value)); 
+//         fetch(url, 
+//     { method: "POST", body: formData }) 
+//     .then(() => { 
+//         // HIDE LOADING 
+//         document.getElementById("loadingOverlay").style.display = "none"; 
+//         // SHOW SUCCESS 
+//         successOverlay.style.display = "flex"; localStorage.clear(); 
+//     }) 
+//     .catch(() => { 
+//         alert("Submission failed, please try again later."); 
+//         // HIDE LOADING EVEN IF FAILED 
+//         document.getElementById("loadingOverlay").style.display = "none"; 
+//     }); 
+// });
 
 </script>
 
