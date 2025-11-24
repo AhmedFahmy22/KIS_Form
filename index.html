@@ -9,7 +9,7 @@
     body { background:#f4f6f9; font-family: 'Poppins', sans-serif;
     /* background-image: url(KIS_B_img3.jpg);
     background-size: contain; */
-    height: 100vh;
+    height: fit-content;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -87,6 +87,8 @@
                     <option>Year 2</option>
                     <option>Year 3</option>
                     <option>Year 4</option>
+                    <option>Year 5</option>
+                    <option>Year 6</option>
                 </select>
             </div>
 
@@ -95,7 +97,7 @@
                 <input type="date" name="dob" class="form-control" required />
             </div>
 
-            <button type="button" id="nextBtn" class="btn btn-primary w-100">Next</button>
+            <button type="submit" id="nextBtn" class="btn btn-primary w-100">Next</button>
         </form>
 
         <!-- STEP 2 -->
@@ -119,12 +121,16 @@
                 </div>
 
                 <div class="col-12 col-md-6">
-                    <label class="form-label">Preferred Interview *</label>
-                    <select name="interviewMethod" class="form-select" required>
+                    <label class="form-label col-12">Preferred Interview *</label>
+                    <!-- <select name="interviewMethod" class="form-select" required>
                         <option value="">Choose...</option>
-                        <option>Online</option>
                         <option>School Premises</option>
-                    </select>
+                        <option>Online</option>
+                    </select> -->
+                    <input type="radio" checked id="contactChoice1" name="interviewMethod" value="premises" class="col-2"/>
+                    <label for="contactChoice1" class="col-9">School Premises</label>
+                    <input type="radio" id="contactChoice2" name="interviewMethod" value="online" class="col-2"/>
+                    <label for="contactChoice2"class="col-9">Online</label>
                 </div>
 
                 <div class="col-12">
@@ -189,10 +195,33 @@ document.querySelectorAll("input, select").forEach(el => {
     el.addEventListener("input", () => localStorage.setItem(el.name, el.value));
 });
 
+function validateFirstForm() {
+  const form = document.getElementById('step1'); // Replace 'yourFormId' with the actual ID of your form
+  const inputs = form.querySelectorAll('input, textarea, select'); // Select all input, textarea, and select elements
+
+  for (let i = 0; i < inputs.length; i++) {
+    const field = inputs[i];
+
+    // Skip fields that are not required or are hidden
+    if (field.hasAttribute('required') || (field.type !== 'hidden' && field.type !== 'submit' && field.type !== 'button')) {
+      if (field.value.trim() === '') {
+        alert('Please fill in all required fields.'); // Or display a more specific error message
+        field.focus(); // Focus on the empty field for user convenience
+        return false; // Prevent form submission
+      }
+    }
+  }
+
+  return true; // All required fields are filled, allow form submission
+}
+
 // SLIDE NEXT
-nextBtn.addEventListener("click", () => {
-    slider.style.transform = "translateX(-50%)"
-    step2_div.style.display = "block"
+nextBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    if(validateFirstForm()) {
+        slider.style.transform = "translateX(-50%)"
+        step2_div.style.display = "block"
+    }
 });
 
 // SLIDE BACK
