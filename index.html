@@ -4,6 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Online Admission Enquiry</title>
+<link rel="icon" type="image/png" href="international-logo2.png">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,7 +24,7 @@
     background-color: rgb(245, 184, 25); 
     padding: 10px;   
 }
-    .form-card { max-width: 650px; margin: 0 auto; background:white; padding:25px; border-radius:14px; box-shadow:0 6px 20px #0002; overflow:hidden; }
+    .form-card { max-width: 650px; margin: 0 auto; background:white; padding:15px; border-radius:14px; box-shadow:0 6px 20px #0002; overflow:hidden; }
     .slide-wrapper { display:flex; width:200%; transition:transform .45s ease; }
     .step { width:50%; padding:0 25px; }
     #successOverlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,.7); backdrop-filter:blur(4px); justify-content:center; align-items:center; }
@@ -95,12 +96,23 @@
         font-weight: bold;
     }
 
+    h4 span {
+        color: rgb(16, 71, 53);
+        font-size: large;
+        text-align: end;
+    }
+
     #header-div h2 {
         color: rgb(16, 71, 53);
         font-weight: bold;
     }
     span.req {
         color: red
+    }
+    form h4 {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
     }
 
 </style>
@@ -118,15 +130,16 @@
 
         <!-- STEP 1 -->
         <form id="step1" class="step">
-            <h4 class="mb-3">Student Information</h4>
+            <div class="row">
+                <h4 class="mb-3">Student Information <span>Page (1 / 2)</span></h4>
 
             <div class="mb-3">
-                <label class="form-label">Student Name<span class="req">*</span></label>
+                <label class="form-label">Student Name &mdash; أسم الطالب <span class="req">*</span></label>
                 <input type="text" name="studentName" class="form-control" required />
             </div>
 
             <div class="mb-3">
-                <label class="form-label">Academic Year <span class="req">*</span></label>
+                <label class="form-label">Academic Year &mdash; العام الدراسي <span class="req">*</span></label>
                 <select name="academicYear" class="form-select" required>
                     <option value="">Choose...</option>
                     <option>2025-2026</option>
@@ -135,7 +148,7 @@
             </div>
 
             <div class="mb-3">
-                <label class="form-label">Grade <span class="req">*</span></label>
+                <label class="form-label">Grade &mdash; الصف <span class="req">*</span></label>
                 <select name="grade" class="form-select" required>
                     <option value="">Choose...</option>
                     <option>Year 1</option>
@@ -148,30 +161,31 @@
             </div>
 
             <div class="mb-3">
-                <label class="form-label">Date of Birth <span class="req">*</span></label>
+                <label class="form-label">Date of Birth &mdash; تاريخ الميلاد <span class="req">*</span></label>
                 <input type="date" name="dob" class="form-control" required />
             </div>
 
             <button type="submit" id="nextBtn" class="btn btn-primary w-100">Next</button>
+            </div>
         </form>
 
         <!-- STEP 2 -->
         <form id="step2" class="step">
-            <h4 class="mb-3">Parent Information</h4>
+            <h4 class="mb-3">Parent Information <span>Page (2 / 2)</span></h4>
 
             <div class="row g-3">
                 <div class="col-12 col-md-6">
-                    <label class="form-label">Father Name <span class="req">*</span></label>
+                    <label class="form-label">Father Name &mdash; أسم الوالد <span class="req">*</span></label>
                     <input type="text" name="fatherName" class="form-control" required />
                 </div>
 
                 <div class="col-12 col-md-6">
-                    <label class="form-label">Mother Name <span class="req">*</span></label>
+                    <label class="form-label">Mother Name &mdash; أسم الوالدة <span class="req">*</span></label>
                     <input type="text" name="motherName" class="form-control" required />
                 </div>
 
                 <div class="col-12 col-md-6">
-                    <label class="form-label">Mobile Number <span class="req">*</span></label>
+                    <label class="form-label">Mobile Number &mdash; رقم الهاتف <span class="req">*</span></label>
                     <input type="tel" name="mobileNumber" class="form-control" pattern="^[0-9]{11}$" required/>
                 </div>
 
@@ -189,17 +203,17 @@
                 </div>
 
                 <div class="col-12">
-                    <label class="form-label">Full Address <span class="req">*</span></label>
+                    <label class="form-label">Full Address &mdash; العنوان <span class="req">*</span></label>
                     <input type="text" name="address" class="form-control" required />
                 </div>
 
                 <div class="col-12 col-md-6">
-                    <label class="form-label">Father Occupation <span class="req">*</span></label>
+                    <label class="form-label">Father Occupation &mdash; مهنة الوالد <span class="req">*</span></label>
                     <input type="text" name="fatherJob" class="form-control" required />
                 </div>
 
                 <div class="col-12 col-md-6">
-                    <label class="form-label">Mother Occupation <span class="req">*</span></label>
+                    <label class="form-label">Mother Occupation &mdash; مهنة الوالدة <span class="req">*</span></label>
                     <input type="text" name="motherJob" class="form-control" required />
                 </div>
 
@@ -245,6 +259,7 @@ const nextBtn = document.getElementById("nextBtn");
 const backBtn = document.getElementById("backBtn");
 const resetBtn = document.getElementById("resetBtn");
 const successOverlay = document.getElementById("successOverlay");
+const step1_div = document.getElementById("step1");
 const step2_div = document.getElementById("step2");
 
 // Restore saved data
@@ -284,12 +299,14 @@ nextBtn.addEventListener("click", (e) => {
     e.preventDefault();
     if(validateFirstForm()) {
         slider.style.transform = "translateX(-50%)"
+        step1_div.style.visibility = "hidden"
         step2_div.style.display = "block"
     }
 });
 
 // SLIDE BACK
 backBtn.addEventListener("click", () => {
+    step1_div.style.visibility = "visible"
     slider.style.transform = "translateX(0%)"
     step2_div.style.display = "none"
 });
@@ -300,6 +317,7 @@ resetBtn.addEventListener("click", () => {
 
     localStorage.clear();
     document.querySelectorAll("input, select").forEach(el => el.value = "");
+    step1_div.style.visibility = "visible"
     step2_div.style.display = "none"
     slider.style.transform = "translateX(0%)";
 });
@@ -311,6 +329,7 @@ successReset.addEventListener("click", () => {
     localStorage.clear();
     document.querySelectorAll("input, select").forEach(el => el.value = "");
     successOverlay.style.display = "none";
+    step1_div.style.visibility = "visible"
     step2_div.style.display = "none"
     slider.style.transform = "translateX(0%)";
 });
